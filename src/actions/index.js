@@ -16,11 +16,12 @@ export const processLogout = createAction(constants.PROCESS_LOGOUT);
 export function handleLogin(username) {
   return function (dispatch) {
     // First dispatch to change the state to the Login button
-    dispatch(loginRequest());
+    dispatch(loginRequest({
+      username,
+    }));
     // After 1s, Login goes through
     setTimeout(() => {
       dispatch(loginSuccess({
-        username,
         posts: mockParsedResponse.data.posts,
       }));
       // After successful initial data preload, we redirect to '/posts'

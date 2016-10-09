@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
 import '../styles/Header.css';
 
-const Header = ({ title, username, handleLogout }) => (
+const Header = ({ title, username, handleLogout, isLoggingIn }) => (
   <div className="Header">
     <h4>{title || 'Tabular app'}</h4>
-    {username && (
+    {username && !isLoggingIn && (
       <div>
         <span className="Username">{username}</span>
         <span className="Logout" onClick={handleLogout}>Logout</span>

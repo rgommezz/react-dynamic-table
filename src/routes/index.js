@@ -4,10 +4,12 @@ import App from '../components/App';
 import Login from '../components/Login';
 import Posts from '../components/Posts';
 
-function checkIfUserLoggedIn(nextState, replace) {
-  // Temporarily, we assume user wasn't logged in previously.
-  const userIsLoggedIn = false;
-  if (nextState.location.pathname === '/' && !userIsLoggedIn) {
+function checkIfUserLoggedIn({ location: { pathname }}, replace) {
+  let username;
+  if (typeof localStorage['reduxPersist:username'] !== 'undefined') {
+    username = JSON.parse(localStorage['reduxPersist:username']);
+  }
+  if ((pathname === '/' || pathname === '/posts') && !username) {
     replace('/login');
   }
 }
@@ -15,6 +17,6 @@ function checkIfUserLoggedIn(nextState, replace) {
 export default (
   <Route path="/" component={App} onEnter={checkIfUserLoggedIn}>
     <Route path="login" component={Login} />
-    <Route path="posts" component={Posts} />
+    <Route path="posts" component={Posts} onEnter={checkIfUserLoggedIn} />
   </Route>
 );

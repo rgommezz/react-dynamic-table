@@ -11,12 +11,12 @@ const initialState = {
 
 const handleLoginRequest = (state, { payload }) => ({
   ...state,
-  ...{ isLoggingIn: true },
+  ...{ isLoggingIn: true, username: payload.username },
 });
 
 const handleLoginSuccess = (state, { payload }) => ({
   ...state,
-  ...{ isLoggingIn: false, posts: payload.posts, username: payload.username },
+  ...{ isLoggingIn: false, posts: payload.posts },
 });
 
 const processLogout = state => initialState;
