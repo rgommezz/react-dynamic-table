@@ -8,7 +8,10 @@ class Posts extends Component {
   render() {
     return (
       <div className="Container">
-        <Table posts={this.props.posts} />
+        <Table
+          posts={this.props.posts}
+          username={this.props.username}
+        />
       </div>
     )
   }
@@ -16,6 +19,7 @@ class Posts extends Component {
 
 const mapStateToProps = state => ({
   posts: getPostsSelector(state),
+  username: state.username,
 });
 
 export default connect(mapStateToProps, null)(Posts);

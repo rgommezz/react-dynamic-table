@@ -1,3 +1,7 @@
 .Container {
     padding: 15px;
 }
+
+.Row--active {
+    background-color: #B2DFDB;
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/Posts.css';
 
 const Table = (props) => {
   return (
@@ -16,7 +17,7 @@ const Table = (props) => {
       <tbody>
       {props.posts.map(post => {
         return (
-          <tr key={post.id}>
+          <tr key={post.id} className={props.username === post.username ? 'Row--active' : null}>
             <td>{post.id}</td>
             <td>{post.username}</td>
             <td>{post.title}</td>
