@@ -7,6 +7,7 @@ import mockParsedResponse from '../mocks/posts';
 export const loginRequest = createAction(constants.LOGIN_REQUEST);
 export const loginSuccess = createAction(constants.LOGIN_SUCCESS);
 export const processLogout = createAction(constants.PROCESS_LOGOUT);
+export const changePage = createAction(constants.CHANGE_PAGE);
 
 /**
  * Thunk action creator that simulates an async login

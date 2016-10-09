@@ -17,8 +17,7 @@ const store = createStore(
   )
 );
 
-persistStore(store, {}, () => {
-  console.log('rehydration complete');
-});
+// Persisting all state due to its simplicity, no specific config provided
+persistStore(store, {});
 
 export default store;

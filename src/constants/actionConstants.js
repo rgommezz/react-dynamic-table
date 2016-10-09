@@ -1,3 +1,4 @@
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const PROCESS_LOGOUT = 'PROCESS_LOGOUT';
+export const CHANGE_PAGE = 'CHANGE_PAGE';

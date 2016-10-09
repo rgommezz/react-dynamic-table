@@ -5,3 +5,20 @@
 .Row--active {
     background-color: #B2DFDB;
 }
+
+.Pages {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+}
+
+.Page {
+    font-weight: bold;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.Page--active {
+    font-size: medium;
+    color: #009688;
+}

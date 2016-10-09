@@ -22,13 +22,36 @@ const handleLoginSuccess = (state, { payload }) => ({
 
 const processLogout = state => initialState;
 
+const changePage = (state, { payload }) => ({
+  ...state,
+  ...{ currentPage: payload.currentPage},
+});
+
 export default handleActions({
   [constants.LOGIN_REQUEST]: handleLoginRequest,
   [constants.LOGIN_SUCCESS]: handleLoginSuccess,
   [constants.PROCESS_LOGOUT]: processLogout,
+  [constants.CHANGE_PAGE]: changePage,
 }, initialState);
 
 /** Selectors */
 
 export const getPostsSelector = state =>
-  state.posts.map(post => ({...post, ...{ createdAt: moment(post.createdAt).format('YYYY-MM-DD')}}));
+  state.posts
+    .map(post => ({...post, ...{ createdAt: moment(post.createdAt).format('YYYY-MM-DD')}}))
+    .slice(state.postsPerPage * (state.currentPage - 1), state.postsPerPage * state.currentPage);
+
+/**
+ * Selector that provides an array of positive integers, whose length corresponds with the number of pages to display
+ * i.e. [1, 2, 3] for 3 pages
+ * @param state
+ * @returns {Array.<*>}
+ */
+export const getPagesArraySelector = state => {
+  let numberOfPages = state.posts.length / state.postsPerPage;
+  if (state.posts.length % state.postsPerPage !== 0) {
+    numberOfPages += 1;
+  }
+  // Slicing, since arrays are 0-based
+  return [...Array(numberOfPages + 1).keys()].slice(1);
+};
