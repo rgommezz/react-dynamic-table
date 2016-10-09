@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { handleLogin } from '../actions';
 import '../styles/Login.css';
 
 class Login extends Component {
+  _input = null;
   state = {
     username: '',
     password: '',
   };
+  componentDidMount() {
+   this._input.focus();
+  }
   handleUsernameChange = (e) => {
     this.setState({
       username: e.target.value,
@@ -32,7 +35,7 @@ class Login extends Component {
       <form onSubmit={this.handleSubmit} className="form">
         <div className="form-group">
           <label htmlFor="username">Username:</label>
-          <input className="form-control" placeholder="username" id="username" type="text" value={username} onChange={this.handleUsernameChange} />
+          <input ref={(input) => this._input = input} className="form-control" placeholder="username" id="username" type="text" value={username} onChange={this.handleUsernameChange} />
         </div>
         <div className="form-group">
           <label htmlFor="password">Password:</label>
@@ -50,4 +53,4 @@ const mapStateToProps = state => ({
   isLoading: state.isLoggingIn,
 });
 
-export default withRouter(connect(mapStateToProps, { handleLogin })(Login));
+export default connect(mapStateToProps, { handleLogin })(Login);

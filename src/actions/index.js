@@ -15,16 +15,16 @@ export const processLogout = createAction(constants.PROCESS_LOGOUT);
  */
 export function handleLogin(username) {
   return function (dispatch) {
-    // First dispatch to change the state to the Login button
+    // First action dispatched to change the state of the Login button and stash the username
     dispatch(loginRequest({
       username,
     }));
-    // After 1s, Login goes through
+    // After 1s, We are authenticated and the server has provided the initial data to pre-populate the table
     setTimeout(() => {
       dispatch(loginSuccess({
         posts: mockParsedResponse.data.posts,
       }));
-      // After successful initial data preload, we redirect to '/posts'
+      // After initial posts has been saved in our redux store, we safely carry out redirection to '/posts'
       browserHistory.push('/posts');
     }, 1000);
 
