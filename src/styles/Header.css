@@ -1,0 +1,24 @@
+.Header {
+  background-color: #1a1a1a;
+  height: 56px;
+  color: #7f7f7f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Logout {
+  position: absolute;
+  right: 0;
+  padding: 18px;
+  color: #7f7f7f;
+}
+
+.Logout:hover, .Logout:focus {
+  text-decoration: none;
+  color: #7f7f7f;
+}
+
+.Logout:hover {
+  background-color: #242924;
+}

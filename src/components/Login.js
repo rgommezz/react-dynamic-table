@@ -27,11 +27,11 @@ class Login extends Component {
     return (
       <form onSubmit={this.handleSubmit} className="form">
         <div className="form-group">
-          <label for="username">Username:</label>
+          <label htmlFor="username">Username:</label>
           <input className="form-control" placeholder="username" id="username" type="text" value={username} onChange={this.handleUsernameChange} />
         </div>
         <div className="form-group">
-          <label for="password">Password:</label>
+          <label htmlFor="password">Password:</label>
           <input className="form-control" placeholder="password" id="password" type="password" value={password} onChange={this.handlePasswordChange} />
         </div>
         <div className="form-group">
