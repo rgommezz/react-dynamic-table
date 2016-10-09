@@ -1,5 +1,6 @@
 import { handleActions } from 'redux-actions';
 import * as constants from '../constants/actionConstants';
+import moment from 'moment';
 
 const initialState = {
   isLoggingIn: false,
@@ -26,3 +27,8 @@ export default handleActions({
   [constants.LOGIN_SUCCESS]: handleLoginSuccess,
   [constants.PROCESS_LOGOUT]: processLogout,
 }, initialState);
+
+/** Selectors */
+
+export const getPostsSelector = state =>
+  state.posts.map(post => ({...post, ...{ createdAt: moment(post.createdAt).format('YYYY-MM-DD')}}));

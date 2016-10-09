@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Table from './Table';
+import { getPostsSelector } from '../reducers';
+import '../styles/Posts.css';
 
 class Posts extends Component {
   render() {
     return (
-      <div>
-        We have {this.props.posts.length} posts in total!
+      <div className="Container">
+        <Table posts={this.props.posts} />
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  posts: state.posts
+  posts: getPostsSelector(state),
 });
 
 export default connect(mapStateToProps, null)(Posts);
