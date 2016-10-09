@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import { handleLogin } from '../actions';
 import '../styles/Login.css';
 
 class Login extends Component {
@@ -19,11 +21,13 @@ class Login extends Component {
   };
   handleSubmit = (e) => {
     e.preventDefault();
-    // Handle login, for the time being, redirecting to posts
-    this.props.router.replace('/posts');
+    // For simplicity, we are using setTimeout to simulate an async login
+    // The action handler will load the initial mocked posts and through a thunk, we'll carry out URL redirection.
+    this.props.handleLogin(this.state.username);
   };
   render() {
     const { username, password } = this.state;
+    const { isLoading } = this.props;
     return (
       <form onSubmit={this.handleSubmit} className="form">
         <div className="form-group">
@@ -35,11 +39,15 @@ class Login extends Component {
           <input className="form-control" placeholder="password" id="password" type="password" value={password} onChange={this.handlePasswordChange} />
         </div>
         <div className="form-group">
-          <button className="btn btn-default" type="submit">Login</button>
+          <button className="btn btn-default" type="submit" disabled={isLoading}>{isLoading ? 'Logging in...' : 'Login'}</button>
         </div>
       </form>
     )
   }
 }
 
-export default withRouter(Login);
+const mapStateToProps = state => ({
+  isLoading: state.isLoggingIn,
+});
+
+export default withRouter(connect(mapStateToProps, { handleLogin })(Login));

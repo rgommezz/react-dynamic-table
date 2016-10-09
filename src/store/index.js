@@ -1,16 +1,17 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import * as actionCreators from '../actions';
 import rootReducer from '../reducers';
 
-const devToolExtensionEnhancer = window.devToolsExtension ? window.devToolsExtension({ actionCreators }) : f => f;
+// Thunk middleware for async actions
 const middleware = [thunk];
+
+// Chrome redux dev tools
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
   rootReducer,
-  compose( // Store Enhancers
+  composeEnhancers(
     applyMiddleware(...middleware),
-    devToolExtensionEnhancer
   )
 );
 
