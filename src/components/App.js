@@ -6,8 +6,9 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <h2>Hello Tabular app!</h2>
+          <h4>Hello Tabular app!</h4>
         </div>
+        {this.props.children}
       </div>
     );
   }

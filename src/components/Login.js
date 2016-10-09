@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import '../styles/Login.css';
 
 class Login extends Component {
@@ -18,7 +19,8 @@ class Login extends Component {
   };
   handleSubmit = (e) => {
     e.preventDefault();
-    // Handle login
+    // Handle login, for the time being, redirecting to posts
+    this.props.router.replace('/posts');
   };
   render() {
     const { username, password } = this.state;
@@ -26,11 +28,11 @@ class Login extends Component {
       <form onSubmit={this.handleSubmit} className="form">
         <div className="form-group">
           <label for="username">Username:</label>
-          <input className="form-control" id="username" type="text" value={username} onChange={this.handleUsernameChange} />
+          <input className="form-control" placeholder="username" id="username" type="text" value={username} onChange={this.handleUsernameChange} />
         </div>
         <div className="form-group">
           <label for="password">Password:</label>
-          <input className="form-control" id="password" type="password" value={password} onChange={this.handlePasswordChange} />
+          <input className="form-control" placeholder="password" id="password" type="password" value={password} onChange={this.handlePasswordChange} />
         </div>
         <div className="form-group">
           <button className="btn btn-default" type="submit">Login</button>
@@ -40,4 +42,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);

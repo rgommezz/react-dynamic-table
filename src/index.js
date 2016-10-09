@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Login from './components/Login';
+import { browserHistory } from 'react-router';
+import Root from './components/Root';
 import './styles/index.css';
 
 ReactDOM.render(
-  <Login />,
+  <Root history={browserHistory} />,
   document.getElementById('root')
 );
