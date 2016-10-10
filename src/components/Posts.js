@@ -64,17 +64,20 @@ class Posts extends Component {
           onSelectChange={this.handleSelectChange}
           query={q}
         />
-        <Table
-          posts={posts}
-          username={username}
-        />
-        {pagesArray.length > 1 ?
+        {posts.length > 0 ?
+          <Table
+            posts={posts}
+            username={username}
+          />
+          :
+          <div className="Message">Sorry, there are no results for the criteria specified :(</div>
+        }
+        {pagesArray.length > 1 &&
           <Pagination
             pagesArray={pagesArray}
             currentPage={currentPage}
             changePage={this.handleChangePage}
           />
-          : null
         }
       </div>
     )

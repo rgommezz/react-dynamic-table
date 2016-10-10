@@ -8,6 +8,14 @@ class Filter extends Component {
       query: props.query,
     };
   }
+  componentWillReceiveProps(nextProps) {
+    // To handle the case when we change postsPerPage through the dropdown and we had something in the search bar unsync with the URL
+    if (nextProps.query !== this.state.query) {
+      this.setState({
+        query: nextProps.query,
+      });
+    }
+  }
   handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       this.handleSearch()
@@ -22,6 +30,7 @@ class Filter extends Component {
     });
   };
   render() {
+    console.log('re-rendering');
     const options = [5, 10, 15, 20]; // That could (and should) come from a configuration file. Hardcoded here for simplicity
     return (
       <div className="Container">
