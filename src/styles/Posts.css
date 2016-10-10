@@ -13,17 +13,37 @@
 }
 
 .Page {
-    font-weight: bold;
-    margin: 0 5px;
+    border: 1px solid #009688;
+    padding: 5px 10px;
     cursor: pointer;
 }
 
+.Page:first-child {
+    border-right: 0;
+}
+
+.Page:last-child {
+    border-left: 0;
+}
+
+.Page:hover:not(.Page--active) {
+    background-color: #E0E0E0;
+}
+
 .Page--active {
+    font-weight: bold;
     font-size: medium;
-    color: #009688;
+    background-color: #4DB6AC;
+    color: white;
+    cursor: default;
 }
 
 .Message {
     margin-top: 50px;
     text-align: center;
+}
+
+.table-white {
+    background-color: white;
+    border: 2px solid #ddd;
 }

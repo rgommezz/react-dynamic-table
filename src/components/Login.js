@@ -58,7 +58,7 @@ class Login extends Component {
           <button
             className="btn btn-default"
             type="submit"
-            disabled={isLoading}
+            disabled={isLoading || !username || !password}
           >
             {isLoading ? 'Logging in...' : 'Login'}
           </button>

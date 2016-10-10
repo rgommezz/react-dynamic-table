@@ -23,19 +23,21 @@ class Posts extends Component {
     this.props.router.push({ pathname, query });
   };
 
-  handleChangePage = (event) => {
-    const { location } = this.props;
-    const nextPage = Number(event.target.innerHTML);
-    const start = this.props.postsPerPage * (nextPage - 1);
-    let query = {};
+  handlePageChange = (event) => {
+    if (event.type === 'click' || (event.type === 'keydown' && event.key === 'Enter')) {
+      const { location } = this.props;
+      const nextPage = Number(event.target.innerHTML);
+      const start = this.props.postsPerPage * (nextPage - 1);
+      let query = {};
 
-    if (nextPage === 1 && location.query.q) { // Don't erase the q param if we navigating to the 1st page
-      query = { q: location.query.q};
-    } else if (nextPage !== 1) { // Merging previous "q" param and new start param in the URL query
-      query = {...location.query, ...{ start }};
+      if (nextPage === 1 && location.query.q) { // Don't erase the q param if we navigating to the 1st page
+        query = { q: location.query.q};
+      } else if (nextPage !== 1) { // Merging previous "q" param and new start param in the URL query
+        query = {...location.query, ...{ start }};
+      }
+
+      this.handleRouterChange(location.pathname, query);
     }
-
-    this.handleRouterChange(location.pathname, query);
   };
 
   handleSelectChange = (event) => {
@@ -75,7 +77,7 @@ class Posts extends Component {
           <Pagination
             pagesArray={pagesArray}
             currentPage={currentPage}
-            changePage={this.handleChangePage}
+            onPageChange={this.handlePageChange}
           />
         }
       </div>

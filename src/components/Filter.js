@@ -50,7 +50,12 @@ class Filter extends Component {
               onChange={this.handleInputChange}
               value={this.state.query}
             />
-            <i className="fa fa-search fa-2x Search-button" onClick={this.handleSearch} />
+            <span
+              tabIndex="0"
+              className="fa fa-search fa-2x Search-button"
+              onClick={this.handleSearch}
+              onKeyDown={this.handleKeyDown}
+            />
           </div>
         </div>
       </div>

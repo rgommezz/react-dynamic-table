@@ -1,16 +1,23 @@
 import React from 'react';
 import '../styles/Posts.css';
 
-const Pagination = ({ pagesArray, currentPage, changePage }) => {
+const Pagination = ({pagesArray, currentPage, onPageChange}) => {
   return (
     <ul className="Pages">
-      {pagesArray.map(page =>
-        <li
-          className={page === currentPage ? 'Page Page--active' : 'Page'}
-          key={page}
-          onClick={changePage} >
-            {page}
-        </li>
+      {pagesArray.map(page => {
+          const isPageActive = page === currentPage;
+          return (
+            <li
+              tabIndex={isPageActive ? null : "0"}
+              className={isPageActive ? 'Page Page--active' : 'Page'}
+              key={page}
+              onClick={isPageActive ? null : onPageChange}
+              onKeyDown={isPageActive ? null : onPageChange}
+            >
+              {page}
+            </li>
+          )
+        }
       )}
     </ul>
   )
