@@ -6,7 +6,6 @@ const initialState = {
   isLoggingIn: false,
   username: '',
   postsPerPage: 5,
-  currentPage: 1,
   posts: [],
 };
 
@@ -22,24 +21,33 @@ const handleLoginSuccess = (state, { payload }) => ({
 
 const processLogout = state => initialState;
 
-const changePage = (state, { payload }) => ({
-  ...state,
-  ...{ currentPage: payload.currentPage},
-});
-
 export default handleActions({
   [constants.LOGIN_REQUEST]: handleLoginRequest,
   [constants.LOGIN_SUCCESS]: handleLoginSuccess,
   [constants.PROCESS_LOGOUT]: processLogout,
-  [constants.CHANGE_PAGE]: changePage,
 }, initialState);
 
 /** Selectors */
 
-export const getPostsSelector = state =>
-  state.posts
+/**
+ * Determines the current page selected, based on the URL and postsPerPage specified
+ * @param state
+ * @param start, optional URL query param
+ */
+export const getCurrentPage = (state, start) => (Number(start) / state.postsPerPage) + 1;
+
+/**
+ * Gets the array of posts that the Table component will render, based on the criteria specified
+ * @param state
+ * @param start
+ * @returns {Array.<*>}
+ */
+
+export const getPostsSelector = (state, start) => {
+  return state.posts
     .map(post => ({...post, ...{ createdAt: moment(post.createdAt).format('YYYY-MM-DD')}}))
-    .slice(state.postsPerPage * (state.currentPage - 1), state.postsPerPage * state.currentPage);
+    .slice(start, state.postsPerPage * getCurrentPage(state, start));
+};
 
 /**
  * Selector that provides an array of positive integers, whose length corresponds with the number of pages to display
@@ -48,7 +56,7 @@ export const getPostsSelector = state =>
  * @returns {Array.<*>}
  */
 export const getPagesArraySelector = state => {
-  let numberOfPages = state.posts.length / state.postsPerPage;
+  let numberOfPages = Math.floor(state.posts.length / state.postsPerPage);
   if (state.posts.length % state.postsPerPage !== 0) {
     numberOfPages += 1;
   }

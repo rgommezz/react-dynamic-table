@@ -81,6 +81,14 @@ export default {
         "views": 300,
         "likes": 30,
         "createdAt" : "2016-04-23T18:25:43.511Z"
+      },
+      {
+        "id" : 11,
+        "username": "charles",
+        "title" : "Best series of 2016",
+        "views": 1200,
+        "likes": 130,
+        "createdAt" : "2016-06-10T18:25:43.511Z"
       }
     ]
   }
