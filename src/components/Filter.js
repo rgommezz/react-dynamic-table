@@ -22,16 +22,14 @@ class Filter extends Component {
     });
   };
   render() {
+    const options = [5, 10, 15, 20]; // That could (and should) come from a configuration file. Hardcoded here for simplicity
     return (
       <div className="Container">
         <div className="Row">
           <div className="Dropdown">
             <span className="Select-title">Maximum posts per page:</span>
             <select value={this.props.postsPerPage} onChange={this.props.onSelectChange}>
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="20">20</option>
+              {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
             </select>
           </div>
           <div className="Search">
