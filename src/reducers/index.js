@@ -21,10 +21,16 @@ const handleLoginSuccess = (state, { payload }) => ({
 
 const processLogout = state => initialState;
 
+const changePostsPerPage = (state, { payload }) => ({
+  ...state,
+  ...{ postsPerPage: payload},
+});
+
 export default handleActions({
   [constants.LOGIN_REQUEST]: handleLoginRequest,
   [constants.LOGIN_SUCCESS]: handleLoginSuccess,
   [constants.PROCESS_LOGOUT]: processLogout,
+  [constants.CHANGE_POSTS_PER_PAGE]: changePostsPerPage,
 }, initialState);
 
 /** Selectors */

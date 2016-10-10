@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import Filter from './Filter';
 import Table from './Table';
 import Pagination from './Pagination';
 import { getPostsSelector, getPagesArraySelector, getCurrentPage } from '../reducers';
-import { changePage } from '../actions';
+import { changePostsPerPage } from '../actions';
 import '../styles/Posts.css';
 
 class Posts extends Component {
@@ -15,6 +16,7 @@ class Posts extends Component {
     postsPerPage: PropTypes.number.isRequired,
     currentPage: PropTypes.number.isRequired,
     router: PropTypes.object.isRequired,
+    changePostsPerPage: PropTypes.func.isRequired,
   };
   handleChangePage = (event) => {
     const { router, location } = this.props;
@@ -25,19 +27,30 @@ class Posts extends Component {
       query: nextPage !== 1 ? { start } : null,
     });
   };
+  handleSelectChange = (event) => {
+    this.props.changePostsPerPage(Number(event.target.value));
+    this.props.router.push('/posts');
+  };
   render() {
-    const { posts, username, pagesArray, currentPage } = this.props;
+    const { posts, username, pagesArray, currentPage, postsPerPage } = this.props;
     return (
       <div className="Container">
+        <Filter
+          postsPerPage={postsPerPage}
+          onSelectChange={this.handleSelectChange}
+        />
         <Table
           posts={posts}
           username={username}
         />
-        <Pagination
-          pagesArray={pagesArray}
-          currentPage={currentPage}
-          changePage={this.handleChangePage}
-        />
+        {pagesArray.length > 1 ?
+          <Pagination
+            pagesArray={pagesArray}
+            currentPage={currentPage}
+            changePage={this.handleChangePage}
+          />
+          : null
+        }
       </div>
     )
   }
@@ -54,4 +67,4 @@ const mapStateToProps = (state, { location }) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, { changePage })(Posts));
+export default withRouter(connect(mapStateToProps, { changePostsPerPage })(Posts));
