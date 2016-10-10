@@ -19,39 +19,38 @@ class Posts extends Component {
     changePostsPerPage: PropTypes.func.isRequired,
   };
 
+  handleRouterChange = (pathname, query) => {
+    this.props.router.push({ pathname, query });
+  };
+
   handleChangePage = (event) => {
-    const { router, location } = this.props;
+    const { location } = this.props;
     const nextPage = Number(event.target.innerHTML);
     const start = this.props.postsPerPage * (nextPage - 1);
     let query = {};
+
     if (nextPage === 1 && location.query.q) { // Don't erase the q param if we navigating to the 1st page
       query = { q: location.query.q};
     } else if (nextPage !== 1) { // Merging previous "q" param and new start param in the URL query
       query = {...location.query, ...{ start }};
     }
-    router.push({
-      pathname: location.pathname,
-      query,
-    });
+
+    this.handleRouterChange(location.pathname, query);
   };
 
   handleSelectChange = (event) => {
     const selectedPostsPerPage = event.target.value;
-    const { location: { query: { q } }, router, changePostsPerPage } = this.props;
+    const { location: { query: { q } }, changePostsPerPage } = this.props;
     changePostsPerPage(Number(selectedPostsPerPage));
     // Keeping the previous q param if was specified in the URL, to keep in sync with the search bar
-    router.push({
-      pathname: '/posts',
-      query: { q } || null,
-    });
+    this.handleRouterChange('/posts', { q } || {});
   };
 
   handleQueryChange = (q) => {
     // When changing the query to filter by, we remove any previous pagination state in the URL
-    this.props.router.push({
-      pathname: location.pathname,
-      query: { q },
-    })
+    if (q !== this.props.location.query.q) {
+      this.handleRouterChange(location.pathname, { q });
+    }
   };
 
   render() {

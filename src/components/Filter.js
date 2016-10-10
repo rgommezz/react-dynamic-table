@@ -30,7 +30,6 @@ class Filter extends Component {
     });
   };
   render() {
-    console.log('re-rendering');
     const options = [5, 10, 15, 20]; // That could (and should) come from a configuration file. Hardcoded here for simplicity
     return (
       <div className="Container">
