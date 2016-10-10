@@ -40,19 +40,20 @@ export default handleActions({
  * @param state
  * @param start, optional URL query param
  */
-export const getCurrentPage = (state, start) => (Number(start) / state.postsPerPage) + 1;
+export const getCurrentPageSelector = (state, start) => (Number(start) / state.postsPerPage) + 1;
 
 /**
- * Gets the array of posts that the Table component will render, based on the criteria specified
+ *  Gets the array of posts that the Table component will render, based on the criteria specified
  * @param state
  * @param start
+ * @param q, query from the URL (if provided)
  * @returns {Array.<*>}
  */
-
-export const getPostsSelector = (state, start) => {
+export const getPostsSelector = (state, start, q) => {
   return state.posts
     .map(post => ({...post, ...{ createdAt: moment(post.createdAt).format('YYYY-MM-DD')}}))
-    .slice(start, state.postsPerPage * getCurrentPage(state, start));
+    .filter(post => post.username.indexOf(q) > -1)
+    .slice(start, state.postsPerPage * getCurrentPageSelector(state, start));
 };
 
 /**
@@ -61,8 +62,8 @@ export const getPostsSelector = (state, start) => {
  * @param state
  * @returns {Array.<*>}
  */
-export const getPagesArraySelector = state => {
-  let numberOfPages = Math.floor(state.posts.length / state.postsPerPage);
+export const getPagesArraySelector = (state, q) => {
+  let numberOfPages = Math.floor(state.posts.filter(post => post.username.indexOf(q) > -1).length / state.postsPerPage);
   if (state.posts.length % state.postsPerPage !== 0) {
     numberOfPages += 1;
   }

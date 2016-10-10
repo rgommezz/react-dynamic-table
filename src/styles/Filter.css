@@ -1,5 +1,22 @@
 .Container {
-    padding: 20px;
+    padding: 20px 0;
+}
+
+.Row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Search {
+    display: flex;
+}
+
+.Search .form-control {
+    margin-right: 10px;
+}
+
+.Search-button {
+    cursor: pointer;
 }
 
 .Select-title {
