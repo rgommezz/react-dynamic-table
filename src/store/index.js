@@ -17,7 +17,9 @@ const store = createStore(
   )
 );
 
-// Persisting all state due to its simplicity, no specific config provided
-persistStore(store, {});
+// Persisting all state due to its simplicity
+persistStore(store, {
+  keyPrefix: 'ReactTabularApp'
+});
 
 export default store;

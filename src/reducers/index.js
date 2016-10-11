@@ -2,6 +2,10 @@ import { handleActions } from 'redux-actions';
 import * as constants from '../constants/actionConstants';
 import moment from 'moment';
 
+/* We should avoid modeling state after server API. Consequently, this is not the best structure for our posts data,
+   specially if it's going to feed different views or we have editing capabilities.
+   A better architecture would be to use a map and index by IDs (as an in-memory database) but for app simplicity we'll stick to an array */
+
 const initialState = {
   isLoggingIn: false,
   username: '',
