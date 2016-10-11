@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import Filter from './Filter';
 import Table from './Table';
 import Pagination from './Pagination';
-import { getPostsSelector, getPagesArraySelector, getCurrentPageSelector, getSortInfoSelector } from '../reducers';
+import { postsSelector, pagesArraySelector, currentPageSelector, sortInfoSelector } from '../reducers';
 import { changePostsPerPage } from '../actions';
 import '../styles/Posts.css';
 
@@ -95,12 +95,12 @@ class Posts extends Component {
 
 const mapStateToProps = (state, { location }) => {
   const { start = 0, q = '', sort = '' } = location.query;
-  const sortInfo = getSortInfoSelector(sort);
+  const sortInfo = sortInfoSelector(sort);
   return {
-    posts: getPostsSelector(state, start, q, sortInfo),
+    posts: postsSelector(state, start, q, sortInfo),
     username: state.username,
-    pagesArray: getPagesArraySelector(state, q),
-    currentPage: getCurrentPageSelector(state, start),
+    pagesArray: pagesArraySelector(state, q),
+    currentPage: currentPageSelector(state, start),
     postsPerPage: state.postsPerPage,
     query: q,
     sort: sortInfo,

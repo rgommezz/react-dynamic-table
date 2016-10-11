@@ -45,7 +45,7 @@ export default handleActions({
  * @param state
  * @param start, optional URL query param
  */
-export const getCurrentPageSelector = (state, start) => (Number(start) / state.postsPerPage) + 1;
+export const currentPageSelector = (state, start) => (Number(start) / state.postsPerPage) + 1;
 
 /**
  *  Gets the array of posts that the Table component will render, based on the URL query params specified
@@ -55,7 +55,7 @@ export const getCurrentPageSelector = (state, start) => (Number(start) / state.p
  * @param sort the sort criteria applied
  * @returns {Array.<*>}
  */
-export const getPostsSelector = (state, start, q, sort) => {
+export const postsSelector = (state, start, q, sort) => {
   const sortableModel = getSortableModel();
   let result = state.posts
     .map(post => ({...post, ...{ createdAt: moment(post.createdAt).format('YYYY-MM-DD')}})) // formatting dates
@@ -66,7 +66,7 @@ export const getPostsSelector = (state, start, q, sort) => {
   if (sort.order === 'desc') {
     result = result.reverse();
   }
-  result = result.slice(start, state.postsPerPage * getCurrentPageSelector(state, start)); // pagination
+  result = result.slice(start, state.postsPerPage * currentPageSelector(state, start)); // pagination
   return result;
 };
 
@@ -77,7 +77,7 @@ export const getPostsSelector = (state, start, q, sort) => {
  * @param q
  * @returns {Array.<*>}
  */
-export const getPagesArraySelector = (state, q) => {
+export const pagesArraySelector = (state, q) => {
   let numberOfPages = Math.floor(state.posts.filter(post => post.username.indexOf(q) > -1).length / state.postsPerPage);
   if (state.posts.length % state.postsPerPage !== 0) {
     numberOfPages += 1;
@@ -91,7 +91,7 @@ export const getPagesArraySelector = (state, q) => {
  * @param sortQuery: string, format => '<column> <order>'
  * @returns {{by: string, order: string}}
  */
-export const getSortInfoSelector = (sortQuery) => {
+export const sortInfoSelector = (sortQuery) => {
   const info = sortQuery.split(' ');
   return {
     by: info[0],
