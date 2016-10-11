@@ -1,9 +1,23 @@
 import moment from 'moment';
 
 /**
- * Utility containing compare functions for sorting purposes
+ * Comparator functions
+ * They use currying to pass the object key to perform the comparison against
  */
 
-export const sortAlphabetically = (a, b) => a.localeCompare(b);
-export const sortNumerically = (a, b) => a - b;
-export const sortByDate = (a, b) => moment(a).valueOf() - moment(b).valueOf();
+const sortAlphabetically = (key) => (a, b) => a[key].localeCompare(b[key]);
+const sortNumerically = (key) => (a, b) => a[key] - b[key];
+const sortByDate = (key) => (a, b) => moment(a[key]).valueOf() - moment(b[key]).valueOf();
+
+/**
+ * Helper to associate table header with sorting criteria
+ */
+
+export const getSortableModel = () => ({
+  id: sortNumerically,
+  username: sortAlphabetically,
+  title: sortAlphabetically,
+  views: sortNumerically,
+  likes: sortNumerically,
+  createdAt: sortByDate,
+});

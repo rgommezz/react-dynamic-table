@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions';
-import * as constants from '../constants/actionConstants';
 import moment from 'moment';
+import * as constants from '../constants/actionConstants';
+import { getSortableModel } from '../utils/sorting';
 
 /* We should avoid modeling state after server API. Consequently, this is not the best structure for our posts data,
    specially if it's going to feed different views or we have editing capabilities.
@@ -37,7 +38,7 @@ export default handleActions({
   [constants.CHANGE_POSTS_PER_PAGE]: changePostsPerPage,
 }, initialState);
 
-/** Selectors */
+/************ Selectors *****************/
 
 /**
  * Determines the current page selected, based on the URL and postsPerPage specified
@@ -47,17 +48,26 @@ export default handleActions({
 export const getCurrentPageSelector = (state, start) => (Number(start) / state.postsPerPage) + 1;
 
 /**
- *  Gets the array of posts that the Table component will render, based on the criteria specified
+ *  Gets the array of posts that the Table component will render, based on the URL query params specified
  * @param state
- * @param start
- * @param q, query from the URL (if provided)
+ * @param start pagination
+ * @param q the query for filtering
+ * @param sort the sort criteria applied
  * @returns {Array.<*>}
  */
-export const getPostsSelector = (state, start, q) => {
-  return state.posts
-    .map(post => ({...post, ...{ createdAt: moment(post.createdAt).format('YYYY-MM-DD')}}))
-    .filter(post => post.username.indexOf(q) > -1)
-    .slice(start, state.postsPerPage * getCurrentPageSelector(state, start));
+export const getPostsSelector = (state, start, q, sort) => {
+  const sortableModel = getSortableModel();
+  let result = state.posts
+    .map(post => ({...post, ...{ createdAt: moment(post.createdAt).format('YYYY-MM-DD')}})) // formatting dates
+    .filter(post => post.username.indexOf(q) > -1); // filtering by username
+  if (sort.by) {
+    result = result.sort(sortableModel[sort.by](sort.by));
+  }
+  if (sort.order === 'desc') {
+    result = result.reverse();
+  }
+  result = result.slice(start, state.postsPerPage * getCurrentPageSelector(state, start)); // pagination
+  return result;
 };
 
 /**

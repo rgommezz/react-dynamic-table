@@ -29,8 +29,7 @@ class Posts extends Component {
       const nextPage = Number(event.target.innerHTML);
       const start = this.props.postsPerPage * (nextPage - 1);
       let query = {};
-
-      if (nextPage === 1 && location.query.q) { // Erasing q param, prevailing the rest
+      if (nextPage === 1 && Object.keys(location.query).length > 0) { // Erasing start param, prevailing the rest
         query = { ...location.query };
         delete query.start;
       } else if (nextPage !== 1) { // Merging previous query params and new start param in the URL query
@@ -96,14 +95,15 @@ class Posts extends Component {
 
 const mapStateToProps = (state, { location }) => {
   const { start = 0, q = '', sort = '' } = location.query;
+  const sortInfo = getSortInfoSelector(sort);
   return {
-    posts: getPostsSelector(state, start, q),
+    posts: getPostsSelector(state, start, q, sortInfo),
     username: state.username,
     pagesArray: getPagesArraySelector(state, q),
     currentPage: getCurrentPageSelector(state, start),
     postsPerPage: state.postsPerPage,
     query: q,
-    sort: getSortInfoSelector(sort),
+    sort: sortInfo,
   };
 };
 

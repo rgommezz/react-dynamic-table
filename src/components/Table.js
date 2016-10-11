@@ -33,7 +33,7 @@ class Table extends Component {
    * @returns {string}
    */
   buildHeaderTitleForURL(header) {
-    return header.split(' ').join('').toLowerCase();
+    return header.split(' ').join('');
   }
 
   /**
