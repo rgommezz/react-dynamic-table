@@ -4,8 +4,11 @@ import '../styles/Posts.css';
 
 class Table extends Component {
   static propTypes = {
-    posts: PropTypes.array.isRequired,
-    username: PropTypes.string.isRequired,
+    data: PropTypes.array.isRequired,
+    rowActive: PropTypes.shape({
+      column: PropTypes.string,
+      matcher: PropTypes.string,
+    }).isRequired,
     sortBy: PropTypes.string.isRequired,
     sortOrder: PropTypes.string.isRequired,
     onSortChange: PropTypes.func.isRequired,
@@ -33,9 +36,19 @@ class Table extends Component {
     return header.split(' ').join('').toLowerCase();
   }
 
+  /**
+   * Transforms camelCase to Camel Case text
+   * @param header
+   * @returns {string}
+   */
+
+  buildReadableHeader(header) {
+    const result = header.replace(/([A-Z]+)/g, " $1").replace(/([A-Z][a-z])/g, " $1");
+    return `${header.charAt(0).toUpperCase()}${result.slice(1)}`;
+  }
+
   renderTableHeader(){
-    const headers = ['ID', 'User name', 'Post title', 'Views', 'Likes', 'Created at'];
-    const { sortBy, sortOrder } = this.props;
+    const { sortBy, sortOrder, data } = this.props;
     const iconClassName = classnames({
       fa: true,
       'fa-arrow-up': sortOrder === 'desc',
@@ -44,21 +57,22 @@ class Table extends Component {
     });
     return (
       <tr>
-        {headers.map(header => (
-          <th key={header} className="table__header" data-title={this.buildHeaderTitleForURL(header)} onClick={this.handleSortChange}>
-            <span>{header}</span>
-            {sortBy && sortBy === this.buildHeaderTitleForURL(header) && <span className={iconClassName} />}
-          </th>
+        {Object.keys(data[0])
+          .map(header => (
+            <th key={header} className="table__header" data-title={this.buildHeaderTitleForURL(header)} onClick={this.handleSortChange}>
+              <span>{this.buildReadableHeader(header)}</span>
+              {sortBy && sortBy === this.buildHeaderTitleForURL(header) && <span className={iconClassName} />}
+            </th>
         ))}
       </tr>
     )
   }
 
   renderTableBody() {
-    const { posts, username } = this.props;
-    return posts.map(post => {
+    const { data, rowActive: { column, matcher } } = this.props;
+    return data.map(post => {
       return (
-        <tr key={post.id} className={username === post.username ? 'table__row--active' : null}>
+        <tr key={post.id} className={matcher === post[column] ? 'table__row--active' : null}>
           {Object.keys(post).map((key, i) => <td key={`${key}${i}`}>{post[key]}</td>)}
         </tr>
       )

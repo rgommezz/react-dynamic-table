@@ -6,8 +6,8 @@ import Posts from '../components/Posts';
 
 function checkIfUserLoggedIn({ location: { pathname }}, replace) {
   let username;
-  if (typeof localStorage['reduxPersist:username'] !== 'undefined') {
-    username = JSON.parse(localStorage['reduxPersist:username']);
+  if (typeof localStorage['ReactTabularApp:username'] !== 'undefined') {
+    username = JSON.parse(localStorage['ReactTabularApp:username']);
   }
   if ((pathname === '/' || pathname === '/posts') && !username) {
     replace('/login');

@@ -75,8 +75,8 @@ class Posts extends Component {
           <Table
             sortBy={sort.by}
             sortOrder={sort.order}
-            posts={posts}
-            username={username}
+            data={posts}
+            rowActive={{column: 'username', matcher: username}}
             onSortChange={this.handleSortChange}
           />
           :
