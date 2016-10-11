@@ -50,7 +50,7 @@ class Posts extends Component {
   handleQueryChange = (q) => {
     // When changing the query to filter by, we remove any previous pagination state in the URL
     if (q !== this.props.location.query.q) {
-      this.handleRouterChange(location.pathname, { q });
+      this.handleRouterChange(location.pathname, q ? { q } : {});
     }
   };
   

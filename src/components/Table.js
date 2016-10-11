@@ -28,15 +28,6 @@ class Table extends Component {
   };
 
   /**
-   * Transforms the table header name to a more adequate format for URL: User name -> username
-   * @param header
-   * @returns {string}
-   */
-  buildHeaderTitleForURL(header) {
-    return header.split(' ').join('');
-  }
-
-  /**
    * Transforms camelCase to Camel Case text
    * @param header
    * @returns {string}
@@ -59,9 +50,9 @@ class Table extends Component {
       <tr>
         {Object.keys(data[0])
           .map(header => (
-            <th key={header} className="table__header" data-title={this.buildHeaderTitleForURL(header)} onClick={this.handleSortChange}>
+            <th key={header} className="table__header" data-title={header} onClick={this.handleSortChange}>
               <span>{this.buildReadableHeader(header)}</span>
-              {sortBy && sortBy === this.buildHeaderTitleForURL(header) && <span className={iconClassName} />}
+              {sortBy && sortBy === header && <span className={iconClassName} />}
             </th>
         ))}
       </tr>
