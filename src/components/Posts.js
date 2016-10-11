@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import Filter from './Filter';
 import Table from './Table';
 import Pagination from './Pagination';
-import { getPostsSelector, getPagesArraySelector, getCurrentPageSelector } from '../reducers';
+import { getPostsSelector, getPagesArraySelector, getCurrentPageSelector, getSortInfoSelector } from '../reducers';
 import { changePostsPerPage } from '../actions';
 import '../styles/Posts.css';
 
@@ -30,12 +30,12 @@ class Posts extends Component {
       const start = this.props.postsPerPage * (nextPage - 1);
       let query = {};
 
-      if (nextPage === 1 && location.query.q) { // Don't erase the q param if we navigating to the 1st page
-        query = { q: location.query.q};
-      } else if (nextPage !== 1) { // Merging previous "q" param and new start param in the URL query
+      if (nextPage === 1 && location.query.q) { // Erasing q param, prevailing the rest
+        query = { ...location.query };
+        delete query.start;
+      } else if (nextPage !== 1) { // Merging previous query params and new start param in the URL query
         query = {...location.query, ...{ start }};
       }
-
       this.handleRouterChange(location.pathname, query);
     }
   };
@@ -54,21 +54,30 @@ class Posts extends Component {
       this.handleRouterChange(location.pathname, { q });
     }
   };
+  
+  handleSortChange = (by, order) => {
+    const { pathname, query } = this.props.location;
+    const sortQuery = `${by} ${order}`;
+    this.handleRouterChange(pathname, { ...query, ...{ sort: sortQuery } });
+  };
 
   render() {
-    const { posts, username, pagesArray, currentPage, postsPerPage, location: { query: { q = '' }} } = this.props;
+    const { posts, username, pagesArray, currentPage, postsPerPage, query, sort } = this.props;
     return (
       <div className="main">
         <Filter
           onQueryChange={this.handleQueryChange}
           postsPerPage={postsPerPage}
           onSelectChange={this.handleSelectChange}
-          query={q}
+          query={query}
         />
         {posts.length > 0 ?
           <Table
+            sortBy={sort.by}
+            sortOrder={sort.order}
             posts={posts}
             username={username}
+            onSortChange={this.handleSortChange}
           />
           :
           <div className="message">Sorry, there are no results for the criteria specified :(</div>
@@ -86,13 +95,15 @@ class Posts extends Component {
 }
 
 const mapStateToProps = (state, { location }) => {
-  const { start = 0, q ='' } = location.query;
+  const { start = 0, q = '', sort = '' } = location.query;
   return {
     posts: getPostsSelector(state, start, q),
     username: state.username,
     pagesArray: getPagesArraySelector(state, q),
     currentPage: getCurrentPageSelector(state, start),
     postsPerPage: state.postsPerPage,
+    query: q,
+    sort: getSortInfoSelector(sort),
   };
 };
 

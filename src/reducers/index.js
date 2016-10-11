@@ -60,6 +60,7 @@ export const getPostsSelector = (state, start, q) => {
  * Selector that provides an array of positive integers, whose length corresponds with the number of pages to display
  * i.e. [1, 2, 3] for 3 pages
  * @param state
+ * @param q
  * @returns {Array.<*>}
  */
 export const getPagesArraySelector = (state, q) => {
@@ -69,4 +70,17 @@ export const getPagesArraySelector = (state, q) => {
   }
   // Slicing, since arrays are 0-based
   return [...Array(numberOfPages + 1).keys()].slice(1);
+};
+
+/**
+ * Selector that extracts UI data from URL sort query param
+ * @param sortQuery: string, format => '<column> <order>'
+ * @returns {{by: string, order: string}}
+ */
+export const getSortInfoSelector = (sortQuery) => {
+  const info = sortQuery.split(' ');
+  return {
+    by: info[0],
+    order: info[1] || '',
+  };
 };
