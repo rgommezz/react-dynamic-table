@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import Modal from 'react-modal';
 import Filter from './Filter';
 import Table from './Table';
 import Pagination from './Pagination';
@@ -9,6 +10,9 @@ import { changePostsPerPage } from '../actions';
 import '../styles/Posts.css';
 
 class Posts extends Component {
+  state = {
+    modalIsOpen: false,
+  };
   static propTypes = {
     posts: PropTypes.array.isRequired,
     username: PropTypes.string.isRequired,
@@ -60,7 +64,25 @@ class Posts extends Component {
     this.handleRouterChange(pathname, { ...query, ...{ sort: sortQuery } });
   };
 
+  openModal = () => {
+    this.setState({ modalIsOpen: true });
+  };
+
+  closeModal = () => {
+    this.setState({ modalIsOpen: false });
+  };
+
   render() {
+    const customModalStyles = {
+      content : {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+      }
+    };
     const { posts, username, pagesArray, currentPage, postsPerPage, query, sort } = this.props;
     return (
       <div className="main">
@@ -88,6 +110,15 @@ class Posts extends Component {
             onPageChange={this.handlePageChange}
           />
         }
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onRequestClose={this.closeModal}
+          style={customModalStyles}
+        >
+          <h3>Add a new Entry:</h3>
+          <p>Create a Form component</p>
+        </Modal>
+        <button className="fab" onClick={this.openModal}>+</button>
       </div>
     )
   }
