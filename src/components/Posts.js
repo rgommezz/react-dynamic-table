@@ -58,7 +58,7 @@ class Posts extends Component {
   render() {
     const { posts, username, pagesArray, currentPage, postsPerPage, location: { query: { q = '' }} } = this.props;
     return (
-      <div className="Main">
+      <div className="main">
         <Filter
           onQueryChange={this.handleQueryChange}
           postsPerPage={postsPerPage}
@@ -71,7 +71,7 @@ class Posts extends Component {
             username={username}
           />
           :
-          <div className="Message">Sorry, there are no results for the criteria specified :(</div>
+          <div className="message">Sorry, there are no results for the criteria specified :(</div>
         }
         {pagesArray.length > 1 &&
           <Pagination

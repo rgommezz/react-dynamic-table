@@ -1,24 +1,21 @@
-.Container {
+.filter {
     padding: 20px 0;
 }
 
-.Row {
+.filter__row {
     display: flex;
     justify-content: space-between;
 }
 
-.Search {
+.filter__dropdown-title {
+    margin-right: 10px;
+}
+
+.filter__search-container {
     display: flex;
 }
 
-.Search .form-control {
-    margin-right: 10px;
-}
-
-.Search-button {
+.filter__search-button {
     cursor: pointer;
-}
-
-.Select-title {
-    margin-right: 10px;
+    margin-left: 10px;
 }

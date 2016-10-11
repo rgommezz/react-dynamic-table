@@ -3,13 +3,13 @@ import '../styles/Posts.css';
 
 const Pagination = ({pagesArray, currentPage, onPageChange}) => {
   return (
-    <ul className="Pages">
+    <ul className="pagination">
       {pagesArray.map(page => {
           const isPageActive = page === currentPage;
           return (
             <li
               tabIndex={isPageActive ? null : "0"}
-              className={isPageActive ? 'Page Page--active' : 'Page'}
+              className={isPageActive ? 'pagination__page pagination__page--active' : 'pagination__page'}
               key={page}
               onClick={isPageActive ? null : onPageChange}
               onKeyDown={isPageActive ? null : onPageChange}

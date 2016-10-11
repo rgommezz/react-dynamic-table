@@ -1,29 +1,36 @@
-.Header {
+.header {
   background-color: #1a1a1a;
-  height: 56px;
   color: #7f7f7f;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 15px;
 }
 
-.Username {
+.header__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 56px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.header__username {
   color: white;
 }
 
-.Logout {
+.header__logout {
   color: #7f7f7f;
   padding: 20px 15px;
   margin-left: 10px;
   cursor: pointer;
 }
 
-.Logout:hover, .Logout:focus {
+.header__logout:focus {
   text-decoration: none;
-  color: #7f7f7f;
+  outline: 0;
+  background-color: #7f7f7f;
+  color: white;
 }
 
-.Logout:hover {
+.header__logout:hover {
   background-color: #242924;
 }
