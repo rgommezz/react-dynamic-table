@@ -54,9 +54,10 @@ class Login extends Component {
             onChange={this.handlePasswordChange}
           />
         </div>
+        <p>* Type any password to login</p>
         <div className="form-group">
           <button
-            className="btn btn-default"
+            className="btn btn-primary"
             type="submit"
             disabled={isLoading || !username || !password}
           >

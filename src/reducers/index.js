@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 import posts, * as fromPosts from './posts';
 import user from './user';
 
 export default combineReducers({
   posts,
   user,
+  form: formReducer,
 });
 
 /** Selectors */

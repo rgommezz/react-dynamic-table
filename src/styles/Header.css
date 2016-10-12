@@ -1,6 +1,6 @@
 .header {
-  background-color: #1a1a1a;
-  color: #7f7f7f;
+  background-color: #00796B;
+  color: white;
 }
 
 .header__content {
@@ -18,19 +18,18 @@
 }
 
 .header__logout {
-  color: #7f7f7f;
+  color: #F5F5F5;
   padding: 20px 15px;
   margin-left: 10px;
   cursor: pointer;
 }
 
+.header__logout:hover, .header__logout:focus {
+  color: white;
+  background-color: #4DB6AC;
+}
+
 .header__logout:focus {
   text-decoration: none;
   outline: 0;
-  background-color: #7f7f7f;
-  color: white;
-}
-
-.header__logout:hover {
-  background-color: #242924;
 }

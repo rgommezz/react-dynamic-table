@@ -8,6 +8,7 @@ export const loginRequest = createAction(constants.LOGIN_REQUEST);
 export const loginSuccess = createAction(constants.LOGIN_SUCCESS);
 export const processLogout = createAction(constants.PROCESS_LOGOUT);
 export const changePostsPerPage = createAction(constants.CHANGE_POSTS_PER_PAGE);
+export const createNewPost = createAction(constants.CREATE_NEW_POST);
 
 /**
  * Thunk action creator that simulates an async login

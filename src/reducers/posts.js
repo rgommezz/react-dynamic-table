@@ -25,10 +25,16 @@ const changePostsPerPage = (state, { payload }) => ({
   ...{ itemsPerPage: payload },
 });
 
+const createNewPost = (state, { payload }) => ({
+  ...state,
+  ...{ data: [ payload, ...state.data ]},
+});
+
 export default handleActions({
   [constants.LOGIN_SUCCESS]: handleLoginSuccess,
   [constants.PROCESS_LOGOUT]: processLogout,
   [constants.CHANGE_POSTS_PER_PAGE]: changePostsPerPage,
+  [constants.CREATE_NEW_POST]: createNewPost,
 }, initialState);
 
 /** Selectors */

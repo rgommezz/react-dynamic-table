@@ -4,14 +4,15 @@ import { withRouter } from 'react-router';
 import Modal from 'react-modal';
 import Filter from './Filter';
 import Table from './Table';
+import PostForm from './PostForm';
 import Pagination from './Pagination';
 import { postsSelector, pagesArraySelector, currentPageSelector, sortInfoSelector } from '../reducers';
-import { changePostsPerPage } from '../actions';
+import { changePostsPerPage, createNewPost } from '../actions';
 import '../styles/Posts.css';
 
 class Posts extends Component {
   state = {
-    modalIsOpen: false,
+    isModalOpen: false,
   };
   static propTypes = {
     posts: PropTypes.array.isRequired,
@@ -64,12 +65,26 @@ class Posts extends Component {
     this.handleRouterChange(pathname, { ...query, ...{ sort: sortQuery } });
   };
 
+  handleSubmit = (formValues) => {
+    const { username, postsLength } = this.props;
+    // Easy way of generating a new unique ID
+    const id = postsLength + 1;
+    const newPost = { ...{ id, username}, ...formValues };
+    // Simulating a submission to the server
+    setTimeout(() => {
+      this.setState({
+        isModalOpen: false,
+      });
+      this.props.createNewPost(newPost);
+    }, 1000);
+  };
+
   openModal = () => {
-    this.setState({ modalIsOpen: true });
+    this.setState({ isModalOpen: true });
   };
 
   closeModal = () => {
-    this.setState({ modalIsOpen: false });
+    this.setState({ isModalOpen: false });
   };
 
   render() {
@@ -81,6 +96,9 @@ class Posts extends Component {
         bottom: 'auto',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
+        backgroundColor: '#B2DFDB',
+        padding: 40,
+        boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)',
       }
     };
     const { posts, username, pagesArray, currentPage, itemsPerPage, query, sort } = this.props;
@@ -111,12 +129,11 @@ class Posts extends Component {
           />
         }
         <Modal
-          isOpen={this.state.modalIsOpen}
+          isOpen={this.state.isModalOpen}
           onRequestClose={this.closeModal}
           style={customModalStyles}
         >
-          <h3>Add a new Entry:</h3>
-          <p>Create a Form component</p>
+          <PostForm createPost={this.handleSubmit} />
         </Modal>
         <button className="fab" onClick={this.openModal}>+</button>
       </div>
@@ -135,7 +152,13 @@ const mapStateToProps = (state, { location }) => {
     itemsPerPage: state.posts.itemsPerPage,
     query: q,
     sort: sortInfo,
+    postsLength: state.posts.data.length, // handy for generating simple unique IDs
   };
 };
 
-export default withRouter(connect(mapStateToProps, { changePostsPerPage })(Posts));
+const mapDispatchToProps = {
+  changePostsPerPage,
+  createNewPost,
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Posts));
