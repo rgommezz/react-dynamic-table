@@ -51,6 +51,7 @@ class Filter extends Component {
             <select value={this.props.itemsPerPage} onChange={this.props.onSelectChange}>
               {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
             </select>
+            <p className="filter__table-hint">* Click on a header to sort by that column asc or desc respectively</p>
           </div>
           <div className="filter__search-container">
             <input

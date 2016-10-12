@@ -2,6 +2,9 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import '../styles/PostForm.css';
 
+const isPositiveInteger = (value) =>
+  typeof Number(value) === 'number' && Number(value) % 1 === 0 && Number(value) >= 0;
+
 const validate = values => {
   const errors = {};
   if (!values.title ) {
@@ -9,13 +12,13 @@ const validate = values => {
   }
   if (!values.views) {
     errors.views = 'Required';
-  } else if (!(typeof Number(values.views) === 'number' && Number(values.views) % 1 === 0)) {
-    errors.views = 'Views should be an Integer!';
+  } else if (!isPositiveInteger(values.views)) {
+    errors.views = 'Views should be a positive Integer!';
   }
   if (!values.likes) {
     errors.likes = 'Required';
-  } else if (!(typeof Number(values.likes) === 'number' && Number(values.likes) % 1 === 0)) {
-    errors.likes = 'Likes should be an Integer!';
+  } else if (!isPositiveInteger(values.likes)) {
+    errors.likes = 'Likes should be an positive Integer!';
   }
   if (!values.createdAt) {
     errors.createdAt = 'Required';

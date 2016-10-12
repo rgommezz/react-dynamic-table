@@ -19,3 +19,8 @@
     cursor: pointer;
     margin-left: 10px;
 }
+
+.filter__table-hint {
+    color: grey;
+    margin-top: 5px;
+}
