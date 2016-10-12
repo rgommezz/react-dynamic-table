@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import '../styles/Posts.css';
 
 const Pagination = ({pagesArray, currentPage, onPageChange}) => {
@@ -21,6 +21,12 @@ const Pagination = ({pagesArray, currentPage, onPageChange}) => {
       )}
     </ul>
   )
+};
+
+Pagination.propTypes = {
+  pagesArray: PropTypes.arrayOf(PropTypes.number),
+  currentPage: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
 };
 
 export default Pagination;

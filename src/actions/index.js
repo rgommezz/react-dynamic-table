@@ -21,26 +21,26 @@ export function handleLogin(username) {
     dispatch(loginRequest({
       username,
     }));
-    // After 1s, We are authenticated and the server has provided the initial data to pre-populate the table
+    // Simulating that after 1s, we are authenticated and the server has provided the initial data to pre-populate the table
     setTimeout(() => {
       let preloadedPosts;
       const persistedPosts = localStorage['ReactTabularApp:posts'];
       if (typeof persistedPosts !== 'undefined' && JSON.parse(persistedPosts).data.length > 0) {
         preloadedPosts = JSON.parse(persistedPosts).data;
-      } else {
+      } else { // It's the first time we use the app
         preloadedPosts = mockParsedResponse.data.posts;
       }
       dispatch(loginSuccess({
         posts: preloadedPosts,
       }));
-      // After initial posts has been saved in our redux store, we safely carry out redirection to '/posts'
+      // After initial posts has been saved to our redux store, we safely carry out redirection to '/posts'
       browserHistory.push('/posts');
     }, 1000);
 
   }
 }
 /**
- * Thunk action creator that restores initialState and redirects to Login page
+ * Thunk action creator that restores some of the initial state and redirects to Login page
  * @returns {Function}
  */
 export function handleLogout() {

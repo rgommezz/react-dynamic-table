@@ -1,31 +1,41 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { handleLogin } from '../actions';
 import '../styles/Login.css';
 
 class Login extends Component {
+  static propTypes = {
+    isLoading: PropTypes.bool.isRequired,
+    handleLogin: PropTypes.func.isRequired,
+  };
+
   _input = null;
   state = {
     username: '',
     password: '',
   };
+
   componentDidMount() {
    this._input.focus();
   }
+
   handleUsernameChange = (e) => {
     this.setState({
       username: e.target.value,
     });
   };
+
   handlePasswordChange = (e) => {
     this.setState({
       password: e.target.value,
     })
   };
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.handleLogin(this.state.username);
   };
+
   render() {
     const { username, password } = this.state;
     const { isLoading } = this.props;

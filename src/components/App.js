@@ -17,6 +17,9 @@ const App = ({ username, isLoggingIn, children, handleLogout }) => (
 
 App.propTypes = {
   username: PropTypes.string.isRequired,
+  isLoggingIn: PropTypes.bool.isRequired,
+  children: PropTypes.element.isRequired,
+  handleLogout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

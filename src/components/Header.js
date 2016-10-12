@@ -25,6 +25,7 @@ Header.propTypes = {
   title: PropTypes.string,
   username: PropTypes.string.isRequired,
   handleLogout: PropTypes.func.isRequired,
+  isLoggingIn: PropTypes.bool.isRequired,
 };
 
 export default Header;

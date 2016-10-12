@@ -18,10 +18,14 @@ class Posts extends Component {
     posts: PropTypes.array.isRequired,
     username: PropTypes.string.isRequired,
     pagesArray: PropTypes.array.isRequired,
-    itemsPerPage: PropTypes.number.isRequired,
     currentPage: PropTypes.number.isRequired,
+    itemsPerPage: PropTypes.number.isRequired,
     router: PropTypes.object.isRequired,
+    query: PropTypes.string.isRequired,
+    sort: PropTypes.object.isRequired,
+    postsLength: PropTypes.number.isRequired,
     changePostsPerPage: PropTypes.func.isRequired,
+    createNewPost: PropTypes.func.isRequired,
   };
 
   handleRouterChange = (pathname, query = {}) => {
