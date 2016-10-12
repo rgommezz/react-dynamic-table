@@ -121,6 +121,7 @@ class Posts extends Component {
         />
         {posts.length > 0 ?
           <Table
+            headers={['id', 'username', 'title', 'views', 'likes', 'createdAt']}
             sortBy={sort.by}
             sortOrder={sort.order}
             data={posts}

@@ -4,6 +4,7 @@ import '../styles/Posts.css';
 
 class Table extends Component {
   static propTypes = {
+    headers: PropTypes.arrayOf(PropTypes.string).isRequired, // They need to match the row object keys
     data: PropTypes.array.isRequired,
     rowActive: PropTypes.shape({
       column: PropTypes.string,
@@ -13,6 +14,18 @@ class Table extends Component {
     sortOrder: PropTypes.string.isRequired,
     onSortChange: PropTypes.func.isRequired,
   };
+
+  /** Validation for correct component functioning */
+  componentWillMount() {
+    const { headers } = this.props;
+    const keys = Object.keys(this.props.data[0]);
+    headers.forEach(h => {
+      if (keys.indexOf(h) === -1) {
+        throw new Error('One of the headers provided do not match a property from the row entity, please revise' +
+          '"headers" and "data" props supplied');
+      }
+    })
+  }
 
   /**
    * Determines the next sortBy and sortOrder
@@ -39,7 +52,7 @@ class Table extends Component {
   }
 
   renderTableHeader(){
-    const { sortBy, sortOrder, data } = this.props;
+    const { sortBy, sortOrder, headers } = this.props;
     // Asc = arrow up, Desc = arrow down
     //http://ux.stackexchange.com/questions/37564/use-up-or-down-arrow-to-represent-sort-ascending-at-table-header
     const iconClassName = classnames({
@@ -50,7 +63,7 @@ class Table extends Component {
     });
     return (
       <tr>
-        {Object.keys(data[data.length - 1]) // Grabbing the headers from the data model
+        {headers
           .map(header => (
             <th key={header} className="table__header" data-title={header} onClick={this.handleSortChange}>
               <span>{this.buildReadableHeader(header)}</span>
@@ -62,11 +75,11 @@ class Table extends Component {
   }
 
   renderTableBody() {
-    const { data, rowActive: { column, matcher } } = this.props;
+    const { data, rowActive: { column, matcher }, headers } = this.props;
     return data.map(post => {
       return (
         <tr key={post.id} className={matcher === post[column] ? 'table__row--active' : null}>
-          {Object.keys(post).map((key, i) => <td key={`${key}${i}`}>{post[key]}</td>)}
+          {headers.map((key, i) => <td key={`${key}${i}`}>{post[key]}</td>)}
         </tr>
       )
     });
