@@ -5,3 +5,8 @@
 .new-post__title {
   margin-top: 0;
 }
+
+.form-control__error {
+  color: #B71C1C;
+  font-weight: bold;
+}

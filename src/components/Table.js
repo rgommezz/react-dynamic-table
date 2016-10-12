@@ -50,7 +50,7 @@ class Table extends Component {
     });
     return (
       <tr>
-        {Object.keys(data[0])
+        {Object.keys(data[data.length - 1]) // Grabbing the headers from the data model
           .map(header => (
             <th key={header} className="table__header" data-title={header} onClick={this.handleSortChange}>
               <span>{this.buildReadableHeader(header)}</span>

@@ -69,6 +69,10 @@ class Posts extends Component {
     const { username, postsLength } = this.props;
     // Easy way of generating a new unique ID
     const id = postsLength + 1;
+    // To remove .0000 decimals
+    formValues.likes = Math.floor(formValues.likes);
+    formValues.views = Math.floor(formValues.views);
+
     const newPost = { ...{ id, username}, ...formValues };
     // Simulating a submission to the server
     setTimeout(() => {
@@ -133,7 +137,7 @@ class Posts extends Component {
           onRequestClose={this.closeModal}
           style={customModalStyles}
         >
-          <PostForm createPost={this.handleSubmit} />
+          <PostForm onSubmit={this.handleSubmit} />
         </Modal>
         <button className="fab" onClick={this.openModal}>+</button>
       </div>
