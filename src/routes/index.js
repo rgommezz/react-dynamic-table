@@ -6,11 +6,13 @@ import Posts from '../components/Posts';
 
 function checkIfUserLoggedIn({ location: { pathname }}, replace) {
   let username;
-  if (typeof localStorage['ReactTabularApp:username'] !== 'undefined') {
-    username = JSON.parse(localStorage['ReactTabularApp:username']);
+  if (typeof localStorage['ReactTabularApp:user'] !== 'undefined') {
+    username = JSON.parse(localStorage['ReactTabularApp:user']).username;
   }
   if ((pathname === '/' || pathname === '/posts') && !username) {
     replace('/login');
+  } else if (pathname === '/' && username) {
+    replace('/posts');
   }
 }
 

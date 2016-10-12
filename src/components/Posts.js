@@ -17,7 +17,7 @@ class Posts extends Component {
     posts: PropTypes.array.isRequired,
     username: PropTypes.string.isRequired,
     pagesArray: PropTypes.array.isRequired,
-    postsPerPage: PropTypes.number.isRequired,
+    itemsPerPage: PropTypes.number.isRequired,
     currentPage: PropTypes.number.isRequired,
     router: PropTypes.object.isRequired,
     changePostsPerPage: PropTypes.func.isRequired,
@@ -31,7 +31,7 @@ class Posts extends Component {
     if (event.type === 'click' || (event.type === 'keydown' && event.key === 'Enter')) {
       const { location } = this.props;
       const nextPage = Number(event.target.innerHTML);
-      const start = this.props.postsPerPage * (nextPage - 1);
+      const start = this.props.itemsPerPage * (nextPage - 1);
       let query = {};
       if (nextPage === 1 && Object.keys(location.query).length > 0) { // Erasing start param, prevailing the rest
         query = { ...location.query };
@@ -83,12 +83,12 @@ class Posts extends Component {
         transform: 'translate(-50%, -50%)',
       }
     };
-    const { posts, username, pagesArray, currentPage, postsPerPage, query, sort } = this.props;
+    const { posts, username, pagesArray, currentPage, itemsPerPage, query, sort } = this.props;
     return (
       <div className="main">
         <Filter
           onQueryChange={this.handleQueryChange}
-          postsPerPage={postsPerPage}
+          itemsPerPage={itemsPerPage}
           onSelectChange={this.handleSelectChange}
           query={query}
         />
@@ -129,10 +129,10 @@ const mapStateToProps = (state, { location }) => {
   const sortInfo = sortInfoSelector(sort);
   return {
     posts: postsSelector(state, start, q, sortInfo),
-    username: state.username,
+    username: state.user.username,
     pagesArray: pagesArraySelector(state, q),
     currentPage: currentPageSelector(state, start),
-    postsPerPage: state.postsPerPage,
+    itemsPerPage: state.posts.itemsPerPage,
     query: q,
     sort: sortInfo,
   };

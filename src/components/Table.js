@@ -40,10 +40,12 @@ class Table extends Component {
 
   renderTableHeader(){
     const { sortBy, sortOrder, data } = this.props;
+    // Asc = arrow up, Desc = arrow down
+    //http://ux.stackexchange.com/questions/37564/use-up-or-down-arrow-to-represent-sort-ascending-at-table-header
     const iconClassName = classnames({
       fa: true,
-      'fa-arrow-up': sortOrder === 'desc',
-      'fa-arrow-down': sortOrder === 'asc',
+      'fa-arrow-up': sortOrder === 'asc',
+      'fa-arrow-down': sortOrder === 'desc',
       'table__header-icon': true,
     });
     return (

@@ -19,6 +19,9 @@ App.propTypes = {
   username: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({ username, isLoggingIn }) => ({ username, isLoggingIn });
+const mapStateToProps = (state) => ({
+  username: state.user.username,
+  isLoggingIn: state.user.isLoggingIn,
+});
 
 export default connect(mapStateToProps, { handleLogout })(App);

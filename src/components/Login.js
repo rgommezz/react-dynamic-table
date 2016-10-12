@@ -69,7 +69,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => ({
-  isLoading: state.isLoggingIn,
+  isLoading: state.user.isLoggingIn,
 });
 
 export default connect(mapStateToProps, { handleLogin })(Login);
