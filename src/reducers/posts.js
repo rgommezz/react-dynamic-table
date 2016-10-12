@@ -79,8 +79,9 @@ export const postsSelector = (state, start, q, sort) => {
  * @returns {Array.<*>}
  */
 export const pagesArraySelector = (state, q) => {
-  let numberOfPages = Math.floor(state.data.filter(post => post.username.indexOf(q) > -1).length / state.itemsPerPage);
-  if (state.data.length % state.itemsPerPage !== 0) {
+  const filteredData = state.data.filter(post => post.username.indexOf(q) > -1);
+  let numberOfPages = Math.floor(filteredData.length / state.itemsPerPage);
+  if (filteredData.length % state.itemsPerPage !== 0) {
     numberOfPages += 1;
   }
   // Slicing, since arrays are 0-based
