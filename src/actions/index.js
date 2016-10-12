@@ -23,8 +23,15 @@ export function handleLogin(username) {
     }));
     // After 1s, We are authenticated and the server has provided the initial data to pre-populate the table
     setTimeout(() => {
+      let preloadedPosts;
+      const persistedPosts = localStorage['ReactTabularApp:posts'];
+      if (typeof persistedPosts !== 'undefined' && JSON.parse(persistedPosts).data.length > 0) {
+        preloadedPosts = JSON.parse(persistedPosts).data;
+      } else {
+        preloadedPosts = mockParsedResponse.data.posts;
+      }
       dispatch(loginSuccess({
-        posts: mockParsedResponse.data.posts,
+        posts: preloadedPosts,
       }));
       // After initial posts has been saved in our redux store, we safely carry out redirection to '/posts'
       browserHistory.push('/posts');

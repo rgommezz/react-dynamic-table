@@ -3,7 +3,6 @@ import moment from 'moment';
 import * as constants from '../constants/actionConstants';
 import { getSortableModel } from '../utils/sorting';
 
-
 /* We should avoid modeling state after server API. Consequently, this is not the best structure for our posts data,
  specially if it's going to feed different views or we have editing capabilities.
  A better architecture would be to use a map and index by IDs (as an in-memory database) but for app simplicity we'll stick to an array */
@@ -18,7 +17,10 @@ const handleLoginSuccess = (state, { payload }) => ({
   ...{ data: payload.posts },
 });
 
-const processLogout = state => initialState;
+const processLogout = state => ({
+  ...state,
+  ...{ itemsPerPage: 5 },
+});
 
 const changePostsPerPage = (state, { payload }) => ({
   ...state,

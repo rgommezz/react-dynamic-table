@@ -24,7 +24,7 @@ class Posts extends Component {
     changePostsPerPage: PropTypes.func.isRequired,
   };
 
-  handleRouterChange = (pathname, query) => {
+  handleRouterChange = (pathname, query = {}) => {
     this.props.router.push({ pathname, query });
   };
 
@@ -80,6 +80,7 @@ class Posts extends Component {
         isModalOpen: false,
       });
       this.props.createNewPost(newPost);
+      this.handleRouterChange('/posts');
     }, 1000);
   };
 
