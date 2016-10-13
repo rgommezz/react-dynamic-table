@@ -11,8 +11,9 @@
     cursor: pointer;
 }
 
-.table__header:hover {
+.table__header:hover, .table__header:focus {
     background-color: #E0E0E0;
+    outline: 0;
 }
 
 .table--white {

@@ -33,11 +33,13 @@ class Table extends Component {
    * @param event
    */
   handleSortChange = (event) => {
-    const previousBy = this.props.sortBy;
-    // We also need to handle the case when when clicking on the child <span>s
-    const newBy = event.target.getAttribute('data-title') || event.target.parentNode.getAttribute('data-title');
-    const newOrder = !this.props.sortOrder || this.props.sortOrder === 'desc' || previousBy !== newBy ? 'asc' : 'desc';
-    this.props.onSortChange(newBy, newOrder);
+    if (event.type === 'click' || (event.type === 'keydown' && event.key === 'Enter')) {
+      const previousBy = this.props.sortBy;
+      // We also need to handle the case when when clicking on the child <span>s
+      const newBy = event.target.getAttribute('data-title') || event.target.parentNode.getAttribute('data-title');
+      const newOrder = !this.props.sortOrder || this.props.sortOrder === 'desc' || previousBy !== newBy ? 'asc' : 'desc';
+      this.props.onSortChange(newBy, newOrder);
+    }
   };
 
   /**
@@ -65,7 +67,7 @@ class Table extends Component {
       <tr>
         {headers
           .map(header => (
-            <th key={header} className="table__header" data-title={header} onClick={this.handleSortChange}>
+            <th tabIndex="0" onKeyDown={this.handleSortChange} key={header} className="table__header" data-title={header} onClick={this.handleSortChange}>
               <span>{this.buildReadableHeader(header)}</span>
               {sortBy && sortBy === header && <span className={iconClassName} />}
             </th>
