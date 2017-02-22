@@ -1,7 +1,5 @@
-React Dynamic Tabular
+React Dynamic Table
 =====================
-
-Application displaying dynamic tabular datasets using React.js
 
 This project has been bootstrapped with [react-create-app](https://github.com/facebookincubator/create-react-app) boilerplate 
 
